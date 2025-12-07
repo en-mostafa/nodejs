@@ -13,3 +13,12 @@ export const createShift = async (req: AuthRequest, res: Response, next: NextFun
         next(error)
     }
 }
+
+export const logShift = async (req: AuthRequest, res: Response) => {
+    if (!req.user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const shifts = await prisma.shift.findMany();
+    res.status(200).json({ data: shifts, messgae: 'باموفقیت انجام شد' })
+}

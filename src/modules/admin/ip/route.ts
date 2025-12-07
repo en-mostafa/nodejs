@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validate } from "../../../middlewares/validate";
 import { ipSchema } from "./validate";
-import { createIp } from "./controller";
+import { createIp, ipLogs } from "./controller";
 import { authMiddelware } from "../../../middlewares/auth";
 import { roleMiddleware } from "../../../middlewares/role";
 import { Role } from "../../../types/jwt";
@@ -15,6 +15,9 @@ router.post('/create',
     validate(ipSchema),
     createIp
 );
+
+//GET
+router.get('/index', authMiddelware, roleMiddleware(Role.ADMIN), ipLogs)
 
 
 export default router;

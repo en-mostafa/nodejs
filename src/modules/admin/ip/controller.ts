@@ -14,3 +14,12 @@ export const createIp = async (req: AuthRequest, res: Response, next: NextFuncti
         next(error)
     }
 }
+
+export const ipLogs = async (req: AuthRequest, res: Response) => {
+    if (!req.user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const ips = await prisma.iP.findMany();
+    res.status(200).json({ data: ips, message: "با موفقیت انجام شد" })
+}

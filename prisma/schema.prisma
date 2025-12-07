@@ -33,6 +33,9 @@ model User {
   walletTransactions WalletTransaction[]
   leaveRquests       LeaveRquest[]
   notifications      Notification[]
+  address            String?
+  insurance          String?
+  emergencyPhone     String?
 }
 
 model Shift {
