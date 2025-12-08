@@ -2,6 +2,7 @@ import express from "express";
 import authRoutesAdmin from './modules/admin/auth/route';
 import ipRoutesAdmin from './modules/admin/ip/route';
 import shiftRoutesAdmin from './modules/admin/shift/route';
+import createUser from './modules/admin/user/route';
 import authRoutesUser from './modules/user/auth/route';
 import attendanceRoutesUser from './modules/user/attendance/route';
 import dashboard from './modules/user/dashboard/route';
@@ -41,6 +42,7 @@ app.use(upload.none());
 app.use('/api/admin/auth', authRoutesAdmin);
 app.use('/api/admin/ip', ipRoutesAdmin);
 app.use('/api/admin/shift', shiftRoutesAdmin);
+app.use('/api/admin/user', createUser);
 
 //Routes User
 app.use('/api/user/auth', authRoutesUser);
