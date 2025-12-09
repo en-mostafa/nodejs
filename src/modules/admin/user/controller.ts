@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { prisma } from "../../../config/prisma";
-import { AuthRequest } from "../../../types/auth-request";
 import { Role } from "../../../types/jwt";
 
 //User register

@@ -5,6 +5,7 @@ import shiftRoutesAdmin from './modules/admin/shift/route';
 import createUser from './modules/admin/user/route';
 import authRoutesUser from './modules/user/auth/route';
 import attendanceRoutesUser from './modules/user/attendance/route';
+import leaveAdmin from './modules/admin/leave/route';
 import dashboard from './modules/user/dashboard/route';
 import leave from './modules/user/leave/route';
 import wallet from './modules/user/wallet/route';
@@ -43,6 +44,7 @@ app.use('/api/admin/auth', authRoutesAdmin);
 app.use('/api/admin/ip', ipRoutesAdmin);
 app.use('/api/admin/shift', shiftRoutesAdmin);
 app.use('/api/admin/user', createUser);
+app.use('/api/admin/user', leaveAdmin);
 
 //Routes User
 app.use('/api/user/auth', authRoutesUser);
