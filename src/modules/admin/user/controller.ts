@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { prisma } from "../../../config/prisma";
+import { AuthRequest } from "../../../types/auth-request";
+import { Role } from "../../../types/jwt";
 
 //User register
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -24,4 +26,13 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
     } catch (err) {
         next(err)
     }
+}
+
+export const userLog = async (req: Request, res: Response) => {
+    const users = await prisma.user.findMany({
+        where: {
+            role: Role.USER
+        }
+    });
+    res.status(200).json({ data: users, message: "با موفقیت انجام شد" })
 }

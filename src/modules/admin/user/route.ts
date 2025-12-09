@@ -2,7 +2,7 @@ import { Router } from "express";
 import { authMiddelware } from "../../../middlewares/auth";
 import { roleMiddleware } from "../../../middlewares/role";
 import { Role } from "../../../types/jwt";
-import { createUser } from "./controller";
+import { createUser, userLog } from "./controller";
 
 
 const router = Router();
@@ -15,5 +15,10 @@ router.post('/create',
 );
 
 //GET
+router.get("/index",
+    authMiddelware,
+    roleMiddleware(Role.ADMIN),
+    userLog
+)
 
 export default router;
