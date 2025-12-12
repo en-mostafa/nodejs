@@ -80,3 +80,14 @@ export const updateShift = async (req: Request, res: Response, next: NextFunctio
         next(error)
     }
 }
+
+export const deleteShift = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = Number(req.params.id);
+        await prisma.shiftSchedule.deleteMany({ where: { shiftId: id } })
+        await prisma.shift.delete({ where: { id } });
+        res.status(200).json({ message: 'با موفقیت انجام شد' })
+    } catch (error) {
+        next(error)
+    }
+}

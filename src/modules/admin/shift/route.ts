@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validate } from "../../../middlewares/validate";
 import { createShiftSchema } from "./validate";
-import { createShift, logShift, shift, updateShift } from "./controller";
+import { createShift, deleteShift, logShift, shift, updateShift } from "./controller";
 import { authMiddelware } from "../../../middlewares/auth";
 import { roleMiddleware } from "../../../middlewares/role";
 import { Role } from "../../../types/jwt";
@@ -35,6 +35,13 @@ router.put("/update",
     authMiddelware,
     roleMiddleware(Role.ADMIN),
     updateShift
+)
+
+//DELETE
+router.delete("/:id",
+    authMiddelware,
+    roleMiddleware(Role.ADMIN),
+    deleteShift
 )
 
 export default router;
