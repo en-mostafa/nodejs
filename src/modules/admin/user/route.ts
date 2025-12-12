@@ -2,7 +2,7 @@ import { Router } from "express";
 import { authMiddelware } from "../../../middlewares/auth";
 import { roleMiddleware } from "../../../middlewares/role";
 import { Role } from "../../../types/jwt";
-import { createUser, userLog } from "./controller";
+import { createUser, updateUser, userInfo, userLog } from "./controller";
 
 
 const router = Router();
@@ -21,4 +21,16 @@ router.get("/index",
     userLog
 )
 
+router.get('/info',
+    authMiddelware,
+    roleMiddleware(Role.ADMIN),
+    userInfo
+)
+
+//PUT
+router.put('update-user',
+    authMiddelware,
+    roleMiddleware(Role.ADMIN),
+    updateUser
+)
 export default router;
