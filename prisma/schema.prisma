@@ -84,19 +84,22 @@ model AttendanceLog {
 }
 
 model MonthlySummary {
-  id               Int       @id @default(autoincrement())
-  user             User      @relation(fields: [userId], references: [id])
+  id               Int              @id @default(autoincrement())
+  user             User             @relation(fields: [userId], references: [id])
   userId           Int
   month            String
   totalHours       Float?
   totalOvertime    Float?
   totalSalary      Float?
+  totalPaid        Float?
+  totalRemain      Float?
+  status           SettlementStatus
   totalAbsent      Int?
   totalDelayTime   Float?
   finalizedAt      DateTime?
   totalHolidayWork Float?
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
 }
 
 model Wallet {
@@ -170,4 +173,9 @@ enum LeaveStatus {
 enum LeaveType {
   HOURLY // مرخصی ساعتی
   DAILY // مرخصی روزانه
+}
+
+enum SettlementStatus {
+  SETTLED // تسویه کامل
+  UNSETTLED // تسویه نشده
 }
