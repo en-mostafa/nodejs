@@ -60,7 +60,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
             where: {
                 id: req.body.id
             },
-            data: { ...req.body }
+            data: req.body
         });
         res.status(200).json({ data: updateUser, message: "با موفقیت انجام شد" })
     } catch (error) {

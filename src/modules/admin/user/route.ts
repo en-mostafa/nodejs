@@ -28,7 +28,7 @@ router.get('/info',
 )
 
 //PUT
-router.put('update-user',
+router.put('/update-user',
     authMiddelware,
     roleMiddleware(Role.ADMIN),
     updateUser
