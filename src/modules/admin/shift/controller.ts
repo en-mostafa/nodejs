@@ -1,4 +1,4 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AuthRequest } from "../../../types/auth-request";
 import { prisma } from "../../../config/prisma";
 
@@ -37,4 +37,46 @@ export const logShift = async (req: AuthRequest, res: Response) => {
     });
 
     res.status(200).json({ data: result, messgae: 'باموفقیت انجام شد' })
+}
+
+export const shift = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const shift = await prisma.shift.findUnique({
+            where: {
+                id: Number(req.query.id),
+            },
+            include: {
+                shiftSchedules: true,
+                ips: true
+            }
+
+        });
+        res.status(200).json({ data: shift, message: "با موفقیت انجام شد" })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const updateShift = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { name, shiftSchedules, ips, holidays } = req.body;
+        const update = await prisma.shift.update({
+            where: {
+                id: Number(req.query.id)
+            },
+            data:
+            {
+                name,
+                holidays,
+                ips,
+                shiftSchedules: {
+                    deleteMany: { shiftId: Number(req.query.id) }, // حذف همه قدیمی‌ها
+                    create: shiftSchedules.create        // ایجاد جدید
+                }
+            }
+        });
+        res.status(200).json({ data: update, message: 'با موفقیت انجام شد' })
+    } catch (error) {
+        next(error)
+    }
 }

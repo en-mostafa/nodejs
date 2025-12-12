@@ -31,3 +31,4 @@ export const attendanceUpdateStatus = async (req: Request, res: Response, next: 
         next(error)
     }
 }
+
