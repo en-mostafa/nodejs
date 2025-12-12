@@ -3,6 +3,7 @@ import authRoutesAdmin from './modules/admin/auth/route';
 import ipRoutesAdmin from './modules/admin/ip/route';
 import shiftRoutesAdmin from './modules/admin/shift/route';
 import attendanceRouteAdmin from './modules/admin/attendance/route';
+import transactionRouteAdmin from './modules/admin/transaction/route';
 import createUser from './modules/admin/user/route';
 import authRoutesUser from './modules/user/auth/route';
 import attendanceRoutesUser from './modules/user/attendance/route';
@@ -47,6 +48,7 @@ app.use('/api/admin/shift', shiftRoutesAdmin);
 app.use('/api/admin/user', createUser);
 app.use('/api/admin/user', leaveAdmin);
 app.use('/api/admin/attendance', attendanceRouteAdmin);
+app.use('/api/admin/transaction', transactionRouteAdmin);
 
 //Routes User
 app.use('/api/user/auth', authRoutesUser);
