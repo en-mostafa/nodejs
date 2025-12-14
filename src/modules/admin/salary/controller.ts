@@ -36,7 +36,6 @@ export const paymetSalary = async (req: Request, res: Response, next: NextFuncti
             userId,
             date,
             description,
-            salary
         } = req.body;
 
         const image = req.file
@@ -44,7 +43,7 @@ export const paymetSalary = async (req: Request, res: Response, next: NextFuncti
             : null;
 
 
-        const payment = await prisma.walletTransaction.create({
+        await prisma.walletTransaction.create({
             data: {
                 amount,
                 userId: Number(userId),
@@ -61,18 +60,33 @@ export const paymetSalary = async (req: Request, res: Response, next: NextFuncti
         if (!summary) {
             throw new Error('Monthly summary not found');
         }
+        const totalPaidPrev = Number(summary.totalPaid ?? 0);
+        const paidNow = Number(amount);
 
-        const newTotalPaid = summary.totalPaid ?? 0 + Number(amount);
-        const totalRemain = Number(salary) - newTotalPaid;
+        const newTotalPaid = totalPaidPrev + paidNow;
+        const totalRemain = Number(summary.totalSalary) - newTotalPaid;
+        const settled = newTotalPaid >= Number(summary.totalSalary);
 
         await prisma.monthlySummary.update({
             where: { id: Number(id), userId: Number(userId) },
             data: {
                 totalPaid: newTotalPaid,
                 totalRemain,
+                status: settled ? "SETTLED" : "UNSETTLED"
+            }
+        });
+
+        await prisma.wallet.update({
+            where: {
+                userId: Number(userId)
+            },
+            data: {
+                balance: { decrement: paidNow }
             }
         })
-        res.status(201).json({ data: payment, message: 'با موفقیت انجام شد' });
+
+
+        res.status(201).json({ data: summary, message: 'با موفقیت انجام شد' });
 
     } catch (error) {
         next(error)
