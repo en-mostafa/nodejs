@@ -15,7 +15,7 @@ router.get("/index",
 );
 
 //POST
-router.post("payment",
+router.post("/payment",
     authMiddelware,
     roleMiddleware(Role.ADMIN),
     upload.single('image'),

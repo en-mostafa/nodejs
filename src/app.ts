@@ -38,9 +38,7 @@ app.use(cors({
 app.use(express.json());
 // Parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
-// for form-data
-app.use(upload.none());
-
+app.use("/uploads", express.static("uploads"));
 
 //Routes Admin
 app.use('/api/admin/auth', authRoutesAdmin);

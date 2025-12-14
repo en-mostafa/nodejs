@@ -43,10 +43,11 @@ export const paymetSalary = async (req: Request, res: Response, next: NextFuncti
             ? `/uploads/${req.file.filename}`
             : null;
 
+
         const payment = await prisma.walletTransaction.create({
             data: {
                 amount,
-                userId,
+                userId: Number(userId),
                 image,
                 date,
                 description
@@ -54,7 +55,7 @@ export const paymetSalary = async (req: Request, res: Response, next: NextFuncti
         });
 
         const summary = await prisma.monthlySummary.findUnique({
-            where: { id, userId }
+            where: { id: Number(id), userId: Number(userId) }
         });
 
         if (!summary) {
@@ -65,7 +66,7 @@ export const paymetSalary = async (req: Request, res: Response, next: NextFuncti
         const totalRemain = Number(salary) - newTotalPaid;
 
         await prisma.monthlySummary.update({
-            where: { id, userId },
+            where: { id: Number(id), userId: Number(userId) },
             data: {
                 totalPaid: newTotalPaid,
                 totalRemain,
