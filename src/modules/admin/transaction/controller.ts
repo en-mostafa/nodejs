@@ -4,8 +4,13 @@ import { prisma } from "../../../config/prisma";
 export const transaction = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const transactions = await prisma.walletTransaction.findMany({
+            where: {
+                date: {
+                    startsWith: req.query.date as string
+                }
+            },
             orderBy: {
-                createAt: "desc"
+                createAt: "desc",
             },
             include: { user: true }
         })
