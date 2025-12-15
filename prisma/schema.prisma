@@ -36,6 +36,7 @@ model User {
   address            String?
   insurance          String?
   emergencyPhone     String?
+  status             UserStatus          @default(ACTIVE)
 }
 
 model Shift {
@@ -178,4 +179,9 @@ enum LeaveType {
 enum SettlementStatus {
   SETTLED // تسویه کامل
   UNSETTLED // تسویه نشده
+}
+
+enum UserStatus {
+  ACTIVE
+  NOTACTIVE
 }

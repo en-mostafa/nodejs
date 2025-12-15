@@ -8,7 +8,9 @@ export const salary = async (req: Request, res: Response, next: NextFunction) =>
         const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
         const endDate = new Date(`${year}-12-31T23:59:59.999Z`);
 
+
         const wallet = await prisma.wallet.findUnique({ where: { userId } });
+        const user = await prisma.user.findUnique({ where: { id: userId } });
 
         const transactions = await prisma.monthlySummary.findMany({
             where: {
@@ -18,11 +20,10 @@ export const salary = async (req: Request, res: Response, next: NextFunction) =>
                     lte: endDate
                 }
             },
-            include: {
-                user: true
-            }
         });
-        res.status(200).json({ data: { transactions, wallet }, message: "با موفقیت انجام شد" })
+
+
+        res.status(200).json({ data: { transactions, wallet, user }, message: "با موفقیت انجام شد" })
     } catch (error) {
         next(error)
     }

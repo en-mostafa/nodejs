@@ -56,11 +56,16 @@ export const userInfo = async (req: Request, res: Response, next: NextFunction) 
 
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const { id, password, ...rest } = req.body;
+        const data: any = { ...rest };
+
+        if (typeof password === "string" && password.trim() !== "") {
+            data.password = await bcrypt.hash(password, 10);
+        }
+
         const updateUser = await prisma.user.update({
-            where: {
-                id: req.body.id
-            },
-            data: req.body
+            where: { id },
+            data
         });
         res.status(200).json({ data: updateUser, message: "با موفقیت انجام شد" })
     } catch (error) {
