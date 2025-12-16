@@ -23,7 +23,7 @@ export const ipAddressMiddleware = async (
     });
 
     const validIp = user?.shift?.ips.some(i => i.ipAddress === IP);
-    if (!validIp) return res.status(400).json({ error: 'آی پی معتبر نیست' });
+    if (!validIp) return res.status(403).json({ error: 'آی پی معتبر نیست' });
 
     next()
 }

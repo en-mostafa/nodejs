@@ -28,12 +28,12 @@ const app = express();
 app.use(helmet());
 
 // CORS configuration
-app.use(cors({
-    origin: ['http://localhost:3001'],
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-}))
+//app.use(cors({
+//    origin: ['http://localhost:3003'],
+//    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+//    allowedHeaders: ['Content-Type', 'Authorization'],
+//    credentials: true,
+//}))
 
 app.use(express.json());
 // Parse URL-encoded bodies
